@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAM Restaurant</title>
+    <link rel="stylesheet" href="D:\myproject\static\css\index.css"> <!-- Link to the external CSS file -->
+    <style>
+        /* index.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    min-height: 100vh; /* Ensure the body takes up at least the full height of the viewport */
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 36px;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+nav {
+    text-align: center;
+    margin-top: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ffc107;
+}
+
+.banner {
+    background-image: url('restaurant.jpg'); /* Replace 'restaurant.jpg' with your actual banner image */
+    background-size: cover;
+    padding: 10px 20px;
+    text-align: center;
+    color: #fff;
+    flex-grow: 1; /* Ensure the banner takes up remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 350px;
+}
+
+.banner h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banner p {
+    font-size: 20px;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+    background-color: #ffc107;
+    color: #343a40;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 20px;
+    transition: background-color 0.3s;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+    background-color: #ffdb6d;
+}
+
+/* Footer styles */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    flex-shrink: 0; /* Prevent the footer from shrinking */
+}
+
+mark {
+    color: red;
+}
+
+.experience {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    color: rgb(200, 0, 200);
+}
+
+#navbarContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#tableNumber, #orderDetailsBtn {
+    background-color: #ffc107;
+    color: #343a40;
+    padding: 5px 5px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: small;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AAM Restaurant</h1>
+        <nav>
+            <div id="navbarContent">
+                <div id = "tableNumber">Table.No: TBL01</div>
+                <a href="order_details.html" id="orderDetailsBtn">Order Details</a>
+                </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="tel:+91%8767860213">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div style="background-color:yellow;"><marquee direction="left" behavior="scroll" scrollamount="10"><h2 class="welcome"><mark>Welcome to AAM Restaurant!!!</mark></h2></marquee></div>
+    <div><center><p class="experience">(EXPERIENCE THE TASTE OF AUTHENTIC DISHES!)</p></center></div>
+    
+
+    <div class="banner"><a href="menu.html" class="btn">View Menu</a></div>
+    <footer>
+        &copy; 2024 AAM Restaurant. All rights reserved.
+    </footer>
+</body>
+</html>

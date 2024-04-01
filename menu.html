@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAM Restaurant</title>
+    <style>
+        body {
+           font-family: Arial, sans-serif;
+           margin: 0;
+           padding: 0;
+           background-color: #f8f9fa;
+       }
+
+       header {
+           background-color: #343a40;
+           color: white;
+           padding: 20px;
+           text-align: center;
+       }
+
+       header h1 {
+           margin: 0;
+           padding: 0;
+           font-size: 32px;
+           letter-spacing: 1px;
+       }
+
+       nav {
+           text-align: center;
+           margin-top: 10px;
+       }
+
+       nav ul {
+           list-style-type: none;
+           padding: 0;
+           margin: 0;
+       }
+
+       nav ul li {
+           display: inline;
+           margin-right: 20px;
+       }
+
+       nav ul li a {
+           text-decoration: none;
+           color: white;
+           font-size: 18px;
+           transition: color 0.3s;
+       }
+
+       nav ul li a:hover {
+           color: #ffc107;
+       }
+
+       .container {
+           width: 90%;
+           margin: auto;
+           text-align: center;
+       }
+
+       .menu {
+           background-color: #fff;
+           padding: 20px;
+           margin-top: 20px;
+           border-radius: 10px;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           text-align: center;
+       }
+
+       .menu h2 {
+           margin-top: 0;
+           color: #343a40;
+           font-size: 24px;
+           margin-bottom: 20px;
+       }
+
+       .menu ul {
+           list-style-type: none;
+           padding: 0;
+           margin: 0;
+           text-align: left;
+       }
+
+       .menu ul li {
+           padding: 10px 0;
+           border-bottom: 1px solid #dee2e6;
+           font-size: 18px;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+       }
+
+       .menu ul li label {
+           flex: 1;
+       }
+
+       .menu ul li input[type="number"] {
+           width: 50px;
+           text-align: center;
+       }
+
+       .menu ul li input[type="checkbox"] {
+           margin-right: 10px;
+       }
+
+       footer {
+           background-color: #343a40;
+           color: white;
+           text-align: center;
+           padding: 20px 0;
+           clear: both;
+       }
+
+       .submit-btn {
+           background-color: #ffc107;
+           color: #343a40;
+           border: none;
+           padding: 10px 20px;
+           font-size: 18px;
+           border-radius: 5px;
+           cursor: pointer;
+           transition: background-color 0.3s;
+           margin-top: 20px;
+       }
+
+       .submit-btn:hover {
+           background-color: #ffdb6d;
+       }
+
+       .disabled {
+           background-color: #f8f9fa;
+           color: #ccc;
+       }
+
+       .disabled input {
+           background-color: #f8f9fa;
+           cursor: not-allowed;
+       }
+
+       .payment {
+           margin-left: 10px;
+       }
+
+       #finalTotal {
+           font-size: 20px;
+           margin-top: 10px;
+           color: green;
+       }
+       #navbarContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#tableNumber, #orderDetailsBtn {
+    background-color: #ffc107;
+    color: #343a40;
+    padding: 5px 5px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: small;
+}
+
+
+    /* Add some space between the table number and other links */
+
+   </style>>
+</head>
+
+<body>
+    <header>
+        <h1>AAM Restaurant</h1>
+        <nav>
+            <div id="navbarContent">
+            <div id = "tableNumber">Table.No: TBL01</div>
+            <a href="order_details.html" id="orderDetailsBtn">Order Details</a>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="tel:9021124589">Contact</a></li>   
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <form action="/submit_order" method="post">
+            <section class="menu">
+                <h2>Menu Special</h2>
+                <ul>
+                    <li>
+                        <input type="checkbox" id="menu_item_1" name="menu_item[paneer_butter_masala]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_1">Paneer Butter Masala</label>
+                        <input type="number" id="quantity_1" name="quantity[paneer_butter_masala]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="300">Rs. 300</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="menu_item_2" name="menu_item[palak_paneer]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_2">Palak Paneer</label>
+                        <input type="number" id="quantity_2" name="quantity[palak_paneer]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="270">Rs. 270</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="menu_item_3" name="menu_item[aloo_gobi]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_3">Aloo Gobi</label>
+                        <input type="number" id="quantity_3" name="quantity[aloo_gobi]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="250">Rs. 250</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="menu_item_4" name="menu_item[chana_masala]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_4">Chana Masala</label>
+                        <input type="number" id="quantity_4" name="quantity[chana_masala]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="210">Rs. 210</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="menu_item_5" name="menu_item[dal_tadaka]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_5">Dal Tadaka</label>
+                        <input type="number" id="quantity_5" name="quantity[dal_tadaka]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="170">Rs. 170</span>
+                    </li>
+                </ul>
+            </section>
+            
+            <section class="menu">
+                <h2>Roti Special</h2>
+                <ul>
+                    <li>
+                        <input type="checkbox" id="menu_item_6" name="menu_item[rot
+                        i_platter_with_dips]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_6">Roti Platter with Dips</label>
+                        <input type="number" id="quantity_6" name="quantity[roti_platter_with_dips]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="80">Rs. 80</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="menu_item_7" name="menu_item[roti_curry_combo]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_7">Roti Curry Combo</label>
+                        <input type="number" id="quantity_7" name="quantity[roti_curry_combo]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="50">Rs. 50</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="menu_item_8" name="menu_item[roti_basket]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_8">Roti Basket</label>
+                        <input type="number" id="quantity_8" name="quantity[roti_basket]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="30">Rs. 30</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="menu_item_9" name="menu_item[masala_roti]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_9">Masala Roti</label>
+                        <input type="number" id="quantity_9" name="quantity[masala_roti]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="20">Rs. 20</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="menu_item_10" name="menu_item[roti_normal]" onchange="toggleQuantity(this)">
+                        <label for="menu_item_10">Roti (Normal)</label>
+                        <input type="number" id="quantity_10" name="quantity[roti_normal]" value="0" min="0" disabled>
+                        <span class="payment" data-initial-price="10">Rs. 10</span>
+                    </li>
+                </ul>
+            </section>
+
+            <button type="button" class="submit-btn" onclick="confirmOrder()">Place Order</button><br><br>
+            <span id="finalTotal">(Total: Rs : 0)</span>
+        </form>
+
+        <!-- Order Summary Section -->
+        <section id="orderSummary" style="display: none;">
+            <h2>Order Summary</h2>
+            <ul id="summaryList">
+                <!-- List items will be dynamically added here -->
+            </ul>
+        </section>
+        
+    </div>
+
+    <footer>
+        &copy; 2024 AAM Restaurant. All rights reserved.
+    </footer>
+
+    <div id="successMessage" style="display: none; text-align: center; padding: 10px; background-color: #4caf50; color: white; margin-top: 20px;">
+        Order placed successfully!
+    </div>
+
+    <script>
+        function toggleQuantity(checkbox) {
+            var quantityInput = checkbox.parentNode.querySelector('input[type="number"]');
+            var paymentSpan = checkbox.parentNode.querySelector('.payment');
+            if (checkbox.checked) {
+                quantityInput.disabled = false;
+                quantityInput.classList.remove('disabled');
+                quantityInput.value = "1"; // Set initial value to 1 when checked
+                calculatePayment();
+                quantityInput.addEventListener('input', function() {
+                    calculatePayment();
+                });
+            } else {
+                quantityInput.disabled = true;
+                quantityInput.classList.add('disabled');
+                quantityInput.value = "0"; // Reset value to 0 when unchecked
+                paymentSpan.textContent = "Rs. 0";
+                calculatePayment();
+            }
+        }
+    
+        function calculatePayment() {
+            var total = 0;
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            checkboxes.forEach(function(checkbox) {
+                var quantityInput = checkbox.parentNode.querySelector('input[type="number"]');
+                var paymentSpan = checkbox.parentNode.querySelector('.payment');
+                var quantity = parseInt(quantityInput.value);
+                var initialPrice = parseInt(paymentSpan.getAttribute('data-initial-price'));
+                var totalPrice = quantity * initialPrice;
+                paymentSpan.textContent = "Rs. " + totalPrice;
+                total += totalPrice;
+            });
+            document.getElementById('finalTotal').textContent = "Total: Rs. " + total;
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.submit-btn').addEventListener('click', function(event) {
+                event.preventDefault();
+                // Collect order details
+                var orderDetails = [];
+                var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                checkboxes.forEach(function(checkbox) {
+                    var quantityInput = checkbox.parentNode.querySelector('input[type="number"]');
+                    var quantity = parseInt(quantityInput.value);
+                    if (quantity > 0) {
+                        var itemName = checkbox.parentNode.querySelector('label').textContent;
+                        var itemPrice = parseInt(checkbox.parentNode.querySelector('.payment').textContent.replace("Rs. ", ""));
+                        orderDetails.push({ item: itemName, quantity: quantity, price: itemPrice });
+                    }
+                });
+    
+                // Retrieve existing order details from sessionStorage
+                var existingOrderDetails = sessionStorage.getItem('orderDetails');
+    
+                // Merge existing order details with new order details
+                if (existingOrderDetails) {
+                    var existingDetails = JSON.parse(existingOrderDetails);
+                    orderDetails = existingDetails.concat(orderDetails);
+                }
+    
+                // Store updated order details in sessionStorage
+                sessionStorage.setItem('orderPlaced', true);
+                sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+    
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+    
+                // Hide the message after 3 seconds (3000 milliseconds)
+                setTimeout(function() {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000);
+    
+                // Redirect to order_details.html
+                window.location.href = "order_details.html";
+            });
+        });
+    </script>
+    
+    
+    
+
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #343a40;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #noOrderMsg {
+            color: red;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #ffc107;
+            color: #343a40;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: #ffdb6d;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 600px) {
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .button-container {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Order Details</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="tel:+91%8767860213">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <table id="orderTable">
+            <thead>
+                <tr>
+                    <th>S.No.</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="orderTableBody">
+                <!-- Order details will be populated here -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3"><b>Total</b></td>
+                    <td id="totalPrice"></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <p style="font-size: 24px; font-weight: bold;  margin-top: 20px;">
+            <span style="color:hsl(6, 82%, 49%);">(Pay here to confirm the Order)</span>
+        </p>
+        <p id="noOrderMsg" style="display: none;">No order found.</p>
+
+        <div class="button-container">
+            <button onclick="pay()">Pay</button>
+            <button onclick="orderMore()">Order More</button>
+            <button onclick="parcel()">Parcel</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AAM Restaurant. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var orderPlaced = sessionStorage.getItem('orderPlaced');
+            var orderTableBody = document.getElementById('orderTableBody');
+            var totalPriceElement = document.getElementById('totalPrice');
+            var noOrderMsg = document.getElementById('noOrderMsg');
+    
+            if (orderPlaced) {
+                var orderDetails = JSON.parse(sessionStorage.getItem('orderDetails'));
+                var totalPrice = 0;
+    
+                if (orderDetails && orderDetails.length > 0) {
+                    orderDetails.forEach(function(item, index) {
+                        var row = createRow(item, index);
+                        orderTableBody.appendChild(row);
+                        totalPrice += item.price;
+                    });
+    
+                    totalPriceElement.textContent = 'Total: Rs. ' + totalPrice;
+                } else {
+                    noOrderMsg.style.display = 'block';
+                }
+            } else {
+                noOrderMsg.style.display = 'block';
+            }
+        });
+    
+        function createRow(item, index) {
+            var row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${item.item}</td>
+                <td>${item.quantity}</td>
+                <td>${item.price}</td>
+                <td><button onclick="deleteRow(this)">Delete</button></td>
+            `;
+            return row;
+        }
+    
+        function deleteRow(button) {
+            var rowToDelete = button.parentNode.parentNode;
+            var priceToDelete = parseInt(rowToDelete.cells[3].textContent);
+            rowToDelete.remove();
+    
+            // Update total price
+            var totalPriceElement = document.getElementById('totalPrice');
+            var totalPrice = parseInt(totalPriceElement.textContent.replace('Total: Rs. ', ''));
+            totalPrice -= priceToDelete;
+            totalPriceElement.textContent = 'Total: Rs. ' + totalPrice;
+    
+            // Check if no rows are left
+            if (document.getElementById('orderTableBody').rows.length === 0) {
+                document.getElementById('noOrderMsg').style.display = 'block';
+            }
+    
+            // Update sessionStorage
+            var orderDetails = JSON.parse(sessionStorage.getItem('orderDetails')) || [];
+            var itemName = rowToDelete.cells[1].textContent;
+            var updatedOrderDetails = orderDetails.filter(function(item) {
+                return item.item !== itemName;
+            });
+            sessionStorage.setItem('orderDetails', JSON.stringify(updatedOrderDetails));
+        }
+    
+        function pay() {
+            // Add logic for paying
+        }
+    
+        function orderMore() {
+            // Redirect to menu.html
+            window.location.href = "menu.html";
+        }
+    
+        function parcel() {
+            // Add logic for parceling
+        }
+    
+        // Function to add new items to the order details
+        function addToOrder(item) {
+            var orderDetails = JSON.parse(sessionStorage.getItem('orderDetails')) || [];
+            var itemName = item.item;
+            var existingItem = orderDetails.find(function(orderItem) {
+                return orderItem.item === itemName;
+            });
+            if (!existingItem) {
+                orderDetails.push(item);
+                sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+            }
+        }
+    </script>
+    
+    
+    
+    
+</body>
+</html>
